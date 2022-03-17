@@ -14,7 +14,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   //*Controladores do texto
   TextEditingController userController = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  TextEditingController passwdController = TextEditingController();
 
   //* cor primaria
   Color primaryColor = Color.fromARGB(255, 255, 111, 0);
@@ -22,6 +21,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //*Serve para impedir que a tela seja redimensionando quando abrir o teclado
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       body: Center(
         child: Column(
@@ -50,7 +51,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             bottom: 20,
                           ),
                           child: Text(
-                            'Registro',
+                            'Esqueci a senha',
                             style: TextStyle(
                               fontFamily: 'Enchanted',
                               fontSize: 40,
@@ -61,50 +62,20 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           ),
                         ),
 
-                        //* Campo de Usuario
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
+                        //* Campo de Texto
+                        const Padding(
+                          padding: EdgeInsets.only(
+                            bottom: 15,
+                          ),
 
                           //* Parametros do TextField
-                          child: TextField(
-                            controller: userController,
-                            cursorColor: primaryColor,
+                          child: Text(
+                            "Digite seu email para recuperar a senha, será enviando um link para realizar a troca da senha.",
                             style: TextStyle(
-                              fontSize: 17,
-                              color: primaryColor,
+                              fontSize: 16,
+                              color: Colors.blue,
                             ),
-
-                            //* Decoração do TextField
-                            decoration: InputDecoration(
-                              labelText: 'Usuário',
-                              prefixIcon: const Icon(
-                                Icons.person,
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(30),
-                                  bottomLeft: Radius.circular(30),
-                                  topLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: primaryColor,
-                                  width: 2,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(30),
-                                  bottomLeft: Radius.circular(30),
-                                  topLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                              ),
-                            ),
+                            textAlign: TextAlign.justify,
                           ),
                         ),
 
@@ -156,65 +127,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           ),
                         ),
 
-                        //* Campo de senha
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-
-                          //* Parametros do TextField
-                          child: TextField(
-                            controller: passwdController,
-                            obscureText: showPassword,
-                            cursorColor: primaryColor,
-                            style: TextStyle(
-                              fontSize: 17,
-                              color: primaryColor,
-                            ),
-
-                            //* Decoração do TextField
-                            decoration: InputDecoration(
-                              prefixIcon: const Icon(
-                                Icons.password,
-                              ),
-                              labelText: 'Senha',
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    showPassword
-                                        ? showPassword = false
-                                        : showPassword = true;
-                                  });
-                                },
-                                icon: Icon(showPassword
-                                    ? Icons.visibility_off_outlined
-                                    : Icons.visibility_outlined),
-                              ),
-                              enabledBorder: const OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: Colors.black,
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.only(
-                                  topRight: Radius.circular(30),
-                                  bottomLeft: Radius.circular(30),
-                                  topLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(
-                                  color: primaryColor,
-                                  width: 2,
-                                ),
-                                borderRadius: const BorderRadius.only(
-                                  topRight: Radius.circular(30),
-                                  bottomLeft: Radius.circular(30),
-                                  topLeft: Radius.circular(10),
-                                  bottomRight: Radius.circular(10),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(
                             vertical: 15,
@@ -226,13 +138,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             onPressed: () {
                               setState(
                                 () {
-                                  userController.clear();
-                                  passwdController.clear();
+                                  emailController.clear();
                                 },
                               );
                             },
                             child: const Text(
-                              'Cadastrar',
+                              'Recuperar',
                               style: TextStyle(
                                 fontFamily: "Enchanted",
                                 fontSize: 35,

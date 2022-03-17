@@ -23,6 +23,8 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //*Serve para impedir que a tela seja redimensionando quando abrir o teclado
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
@@ -211,7 +213,10 @@ class _LoginState extends State<Login> {
                               style: const ButtonStyle(
                                 alignment: Alignment.centerLeft,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/forgotPassword');
+                              },
                               child: const Text('Esqueci a senha'),
                             ),
                             const Expanded(
