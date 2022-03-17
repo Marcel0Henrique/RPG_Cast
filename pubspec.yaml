@@ -79,6 +79,11 @@ flutter:
     - family: Ancient
       fonts:
         - asset: assets/fonts/ancient.ttf
+
+    - family: Enchanted
+      fonts:
+        - asset: assets/fonts/enchanted.otf
+        
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

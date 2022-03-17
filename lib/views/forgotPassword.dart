@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Register extends StatefulWidget {
-  Register({Key? key}) : super(key: key);
+class ForgotPassword extends StatefulWidget {
+  ForgotPassword({Key? key}) : super(key: key);
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<ForgotPassword> createState() => _ForgotPasswordState();
 }
 
-class _RegisterState extends State<Register> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   //* Variavel para mostrar a senha
   bool showPassword = true;
 

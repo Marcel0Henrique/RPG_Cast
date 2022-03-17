@@ -1,5 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:rpg_cast/views/register.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -9,15 +10,15 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  //* Deixa o APP em tela cheia
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-  
   //* Variavel para mostrar a senha
   bool showPassword = true;
 
   //*Controladores do texto
-  TextEditingController userController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwdController = TextEditingController();
+
+  //* cor primaria
+  Color primaryColor = Color.fromARGB(255, 255, 111, 0);
 
   @override
   Widget build(BuildContext context) {
@@ -58,9 +59,10 @@ class _LoginState extends State<Login> {
                         child: Text(
                           'RPG Cast',
                           style: TextStyle(
-                            fontFamily: 'Ancient',
+                            fontFamily: 'Enchanted',
                             fontSize: 40,
-                            //fontWeight: FontWeight.bold,
+                            letterSpacing: 2,
+                            fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 253, 110, 0),
                           ),
                         ),
@@ -72,20 +74,21 @@ class _LoginState extends State<Login> {
 
                         //* Parametros do TextField
                         child: TextField(
-                          controller: userController,
-                          textAlign: TextAlign.center,
-                          cursorColor: const Color.fromARGB(255, 255, 111, 0),
-                          style: const TextStyle(
+                          keyboardType: TextInputType.emailAddress,
+                          controller: emailController,
+                          cursorColor: primaryColor,
+                          style: TextStyle(
                             fontSize: 17,
-                            color: Color.fromARGB(255, 255, 111, 0),
+                            color: primaryColor,
                           ),
 
                           //* Decoração do TextField
-                          decoration: const InputDecoration(
-                            prefixIcon: Icon(
-                              Icons.person,
+                          decoration: InputDecoration(
+                            labelText: 'Email',
+                            prefixIcon: const Icon(
+                              Icons.email,
                             ),
-                            enabledBorder: OutlineInputBorder(
+                            enabledBorder: const OutlineInputBorder(
                               borderSide: BorderSide(
                                 color: Colors.black,
                                 width: 2,
@@ -99,10 +102,10 @@ class _LoginState extends State<Login> {
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color.fromARGB(255, 255, 111, 0),
+                                color: primaryColor,
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(30),
                                 bottomLeft: Radius.circular(30),
                                 topLeft: Radius.circular(10),
@@ -120,16 +123,19 @@ class _LoginState extends State<Login> {
                         //* Parametros do TextField
                         child: TextField(
                           controller: passwdController,
-                          textAlign: TextAlign.center,
                           obscureText: showPassword,
-                          cursorColor: const Color.fromARGB(255, 255, 111, 0),
-                          style: const TextStyle(
+                          cursorColor: primaryColor,
+                          style: TextStyle(
                             fontSize: 17,
-                            color: Color.fromARGB(255, 255, 111, 0),
+                            color: primaryColor,
                           ),
 
                           //* Decoração do TextField
                           decoration: InputDecoration(
+                            labelText: 'Senha',
+                            prefixIcon: const Icon(
+                              Icons.password,
+                            ),
                             suffixIcon: IconButton(
                               onPressed: () {
                                 setState(() {
@@ -154,12 +160,12 @@ class _LoginState extends State<Login> {
                                 bottomRight: Radius.circular(10),
                               ),
                             ),
-                            focusedBorder: const OutlineInputBorder(
+                            focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(
-                                color: Color.fromARGB(255, 255, 111, 0),
+                                color: primaryColor,
                                 width: 2,
                               ),
-                              borderRadius: BorderRadius.only(
+                              borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(30),
                                 bottomLeft: Radius.circular(30),
                                 topLeft: Radius.circular(10),
@@ -180,60 +186,17 @@ class _LoginState extends State<Login> {
                           onPressed: () {
                             setState(
                               () {
-                                userController.clear();
+                                emailController.clear();
                                 passwdController.clear();
-
-                                //*Temporariamente mostra fora de serviço
-                                showDialog(
-                                  //? impede que apertando fora do Alert feche o alert
-                                  barrierDismissible: false,
-
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      AlertDialog(
-                                    actionsAlignment: MainAxisAlignment.center,
-                                    title: Text(
-                                      'Erro',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 30,
-                                        fontFamily: 'Ancient',
-                                        color: Colors.red[600],
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                    content: const Text(
-                                      'Sistema fora de serviço',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                    actions: [
-                                      TextButton(
-                                        style: ElevatedButton.styleFrom(
-                                          primary: const Color.fromARGB(
-                                              255, 238, 103, 0),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.pop(context, true);
-                                        },
-                                        child: const Text(
-                                          "OK",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                );
                               },
                             );
                           },
                           child: const Text(
                             'Entrar',
                             style: TextStyle(
-                              fontFamily: "Ancient",
-                              fontSize: 30,
+                              fontFamily: "Enchanted",
+                              fontSize: 35,
+                              letterSpacing: 2,
                             ),
                           ),
                         ),
@@ -258,7 +221,10 @@ class _LoginState extends State<Login> {
                               style: const ButtonStyle(
                                 alignment: Alignment.centerRight,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/register');
+                              },
                               child: const Text('Cadastrar'),
                             )
                           ],

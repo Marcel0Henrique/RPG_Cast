@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:rpg_cast/views/forgotPassword.dart';
 import 'package:rpg_cast/views/login.dart';
-import 'package:flutter/services.dart';
+import 'package:rpg_cast/views/register.dart';
 
 void main() {
   runApp(const MyApp());
-
-  //* Deixa o APP em tela cheia
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
 }
 
 class MyApp extends StatelessWidget {
@@ -16,7 +14,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: true,
-      home: Login(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => Login(),
+        '/register': (context) => Register(),
+        '/forgotPassword': (context) => ForgotPassword(),
+      },
     );
   }
 }
