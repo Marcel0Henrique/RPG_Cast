@@ -9,6 +9,11 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  //* Variavel para animação do botão carregando
+  bool isLoading = false;
+  bool isDone = false;
+  double sizeWidth = 0.43;
+
   //* Variavel para mostrar a senha
   bool showPassword = true;
 
@@ -225,24 +230,36 @@ class _RegisterState extends State<Register> {
                               ),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
+                                  fixedSize: Size(
+                                      MediaQuery.of(context).size.width *
+                                          sizeWidth,
+                                      MediaQuery.of(context).size.height *
+                                          0.08),
                                   primary:
                                       const Color.fromARGB(255, 238, 103, 0),
                                 ),
                                 onPressed: () {
                                   setState(
                                     () {
+                                      isLoading = true;
+                                      sizeWidth = 0.2;
                                       doUserRegistration();
                                     },
                                   );
                                 },
-                                child: const Text(
-                                  'Cadastrar',
-                                  style: TextStyle(
-                                    fontFamily: "Enchanted",
-                                    fontSize: 35,
-                                    letterSpacing: 2,
-                                  ),
-                                ),
+                                child: isLoading
+                                    ? const CircularProgressIndicator(
+                                        color: Colors.blue,
+                                        backgroundColor: Colors.white,
+                                      )
+                                    : const Text(
+                                        'Cadastrar',
+                                        style: TextStyle(
+                                          fontFamily: "Enchanted",
+                                          fontSize: 35,
+                                          letterSpacing: 2,
+                                        ),
+                                      ),
                               ),
                             ),
                             Padding(
@@ -294,6 +311,12 @@ class _RegisterState extends State<Register> {
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
+
+                //? variaveis para animação do botão
+                setState(() {
+                  isLoading = false;
+                  sizeWidth = 0.43;
+                });
               },
             ),
           ],
@@ -316,6 +339,12 @@ class _RegisterState extends State<Register> {
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
+
+                //? variaveis para animação do botão
+                setState(() {
+                  isLoading = false;
+                  sizeWidth = 0.43;
+                });
               },
             ),
           ],
@@ -336,16 +365,26 @@ class _RegisterState extends State<Register> {
     //* Cadastra o usuario no sistema
     final user = ParseUser.createUser(username, password, email);
 
-    //? Espera a resposta do servidor se conseguiu cadastrar o usuario
-    var response = await user.signUp();
+    var response;
 
-    if (response.success) {
-      showSuccess();
-      userController.clear();
-      emailController.clear();
-      passwdController.clear();
-    } else {
-      showError(response.error!.message);
+    try {
+      //? Espera a resposta do servidor se conseguiu cadastrar o usuario
+      response = await user.signUp();
+
+      if (response.success) {
+        showSuccess();
+        userController.clear();
+        emailController.clear();
+        passwdController.clear();
+      } else {
+        showError(response.error!.message);
+      }
+    } catch (e) {
+      if (username.isEmpty) {
+        showError('Campo usuario está vazio');
+      } else if (password.isEmpty) {
+        showError('Campo email está vazio');
+      }
     }
   }
 }

@@ -5,7 +5,6 @@ import 'package:rpg_cast/views/login.dart';
 import 'package:rpg_cast/views/register.dart';
 
 //*Bibliotecas Back4App
-import 'package:parse_server_sdk_flutter/generated/i18n.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 void main() async {

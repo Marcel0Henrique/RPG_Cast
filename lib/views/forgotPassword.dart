@@ -9,6 +9,11 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  //* Variavel para animação do botão carregando
+  bool isLoading = false;
+  bool isDone = false;
+  double sizeWidth = 0.43;
+
   //* Variavel para mostrar a senha
   bool showPassword = true;
 
@@ -136,24 +141,36 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                               ),
                               child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
+                                  fixedSize: Size(
+                                      MediaQuery.of(context).size.width *
+                                          sizeWidth,
+                                      MediaQuery.of(context).size.height *
+                                          0.08),
                                   primary:
                                       const Color.fromARGB(255, 238, 103, 0),
                                 ),
                                 onPressed: () {
                                   setState(
                                     () {
+                                      isLoading = true;
+                                      sizeWidth = 0.2;
                                       doUserResetPassword();
                                     },
                                   );
                                 },
-                                child: const Text(
-                                  'Recuperar',
-                                  style: TextStyle(
-                                    fontFamily: "Enchanted",
-                                    fontSize: 35,
-                                    letterSpacing: 2,
-                                  ),
-                                ),
+                                child: isLoading
+                                    ? const CircularProgressIndicator(
+                                        color: Colors.blue,
+                                        backgroundColor: Colors.white,
+                                      )
+                                    : const Text(
+                                        'Recuperar',
+                                        style: TextStyle(
+                                          fontFamily: "Enchanted",
+                                          fontSize: 35,
+                                          letterSpacing: 2,
+                                        ),
+                                      ),
                               ),
                             ),
                             Padding(
@@ -205,6 +222,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
+
+                //? variaveis para animação do botão
+                setState(() {
+                  isLoading = false;
+                  sizeWidth = 0.43;
+                });
               },
             ),
           ],
@@ -227,6 +250,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
+
+                //? variaveis para animação do botão
+                setState(() {
+                  isLoading = false;
+                  sizeWidth = 0.43;
+                });
               },
             ),
           ],
