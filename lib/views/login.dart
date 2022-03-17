@@ -23,8 +23,6 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //*Serve para impedir que a tela seja redimensionando quando abrir o teclado
-      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,

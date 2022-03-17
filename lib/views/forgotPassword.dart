@@ -21,8 +21,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //*Serve para impedir que a tela seja redimensionando quando abrir o teclado
-      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.black,
       body: Center(
         child: Column(
