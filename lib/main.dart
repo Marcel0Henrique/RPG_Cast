@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:rpg_cast/views/forgotPassword.dart';
 import 'package:rpg_cast/views/login.dart';
 import 'package:rpg_cast/views/register.dart';
@@ -8,16 +8,24 @@ import 'package:rpg_cast/views/register.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 void main() async {
+  //*Spash Screen
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  //* Back4App
   WidgetsFlutterBinding.ensureInitialized();
 
-  final keyApplicationId = 'kY8RJOQcAocAgo1ks3x1LVhxVMtPpf0ylQ8LffG0';
-  final keyClientKey = 'W6ml6V9daB19a0r642AD76LHoENdTKoaFvy3G7wA';
-  final keyParseServerUrl = 'https://parseapi.back4app.com';
+  const keyApplicationId = 'kY8RJOQcAocAgo1ks3x1LVhxVMtPpf0ylQ8LffG0';
+  const keyClientKey = 'W6ml6V9daB19a0r642AD76LHoENdTKoaFvy3G7wA';
+  const keyParseServerUrl = 'https://parseapi.back4app.com';
 
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
 
-  runApp(MyApp());
+  runApp(const MyApp());
+
+  // whenever your initialization is completed, remove the splash screen:
+  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {

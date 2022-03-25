@@ -18,8 +18,9 @@ class _LoginState extends State<Login> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwdController = TextEditingController();
 
-  //* cor primaria
-  Color primaryColor = Color.fromARGB(255, 255, 111, 0);
+  //* cor primaria e secundaria
+  Color primaryColor = const Color.fromARGB(255, 255, 111, 0);
+  Color secondColor = const Color.fromARGB(255, 37, 39, 73);
 
   @override
   Widget build(BuildContext context) {
@@ -42,9 +43,9 @@ class _LoginState extends State<Login> {
                   Padding(
                     padding: const EdgeInsets.all(17.0),
                     child: Container(
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 37, 39, 73),
-                        borderRadius: BorderRadius.only(
+                      decoration: BoxDecoration(
+                        color: secondColor,
+                        borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(20),
                           topRight: Radius.circular(60),
                           bottomLeft: Radius.circular(60),
