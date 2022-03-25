@@ -9,6 +9,12 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  //* Variaveis para erro
+
+  String? userErro;
+  String? emailErro;
+  String? passwdErro;
+
   //* Variavel para animação do botão carregando
   bool isLoading = false;
   bool isDone = false;
@@ -22,8 +28,9 @@ class _RegisterState extends State<Register> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwdController = TextEditingController();
 
-  //* cor primaria
-  Color primaryColor = Color.fromARGB(255, 255, 111, 0);
+  //* cor primaria e secundaria
+  Color primaryColor = const Color.fromARGB(255, 255, 111, 0);
+  Color secondColor = const Color.fromARGB(255, 37, 39, 73);
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +47,9 @@ class _RegisterState extends State<Register> {
                 Padding(
                   padding: const EdgeInsets.all(17.0),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 37, 39, 73),
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      color: secondColor,
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(60),
                         bottomLeft: Radius.circular(60),
@@ -85,6 +92,7 @@ class _RegisterState extends State<Register> {
 
                                 //* Decoração do TextField
                                 decoration: InputDecoration(
+                                  errorText: userErro,
                                   labelText: 'Usuário',
                                   prefixIcon: const Icon(
                                     Icons.person,
@@ -133,6 +141,7 @@ class _RegisterState extends State<Register> {
 
                                 //* Decoração do TextField
                                 decoration: InputDecoration(
+                                  errorText: emailErro,
                                   labelText: 'Email',
                                   prefixIcon: const Icon(
                                     Icons.email,
@@ -181,6 +190,7 @@ class _RegisterState extends State<Register> {
 
                                 //* Decoração do TextField
                                 decoration: InputDecoration(
+                                  errorText: passwdErro,
                                   prefixIcon: const Icon(
                                     Icons.password,
                                   ),
@@ -303,20 +313,40 @@ class _RegisterState extends State<Register> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Success!"),
+          backgroundColor: secondColor,
+          title: Text(
+            "Successo",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Enchanted',
+              fontSize: 40,
+              color: primaryColor,
+            ),
+          ),
           content: const Text(
-              "Usuário cadastrado com sucesso! verifique seu email antes de realizar o Login."),
+            "Usuário cadastrado com sucesso! verifique seu email antes de realizar o Login.",
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+              color: Colors.blue,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           actions: <Widget>[
             ElevatedButton(
-              child: const Text("OK"),
+              style: ElevatedButton.styleFrom(
+                primary: primaryColor,
+              ),
+              child: const Text(
+                "OK",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
-
-                //? variaveis para animação do botão
-                setState(() {
-                  isLoading = false;
-                  sizeWidth = 0.43;
-                });
+                stopAnimation();
               },
             ),
           ],
@@ -331,20 +361,41 @@ class _RegisterState extends State<Register> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Error!"),
-          //* i18n traduz o erro
-          content: Text(errorMessage),
+          backgroundColor: secondColor,
+          title: Text(
+            "Error",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Enchanted',
+              fontSize: 40,
+              color: primaryColor,
+            ),
+          ),
+          content: Text(
+            errorMessage,
+            textAlign: TextAlign.justify,
+            style: const TextStyle(
+              color: Colors.blue,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           actions: <Widget>[
             ElevatedButton(
-              child: const Text("OK"),
+              style: ElevatedButton.styleFrom(
+                primary: primaryColor,
+              ),
+              child: const Text(
+                "OK",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
 
-                //? variaveis para animação do botão
-                setState(() {
-                  isLoading = false;
-                  sizeWidth = 0.43;
-                });
+                stopAnimation();
               },
             ),
           ],
@@ -362,14 +413,33 @@ class _RegisterState extends State<Register> {
     final email = emailController.text.trim();
     final password = passwdController.text.trim();
 
-    //* Cadastra o usuario no sistema
-    final user = ParseUser.createUser(username, password, email);
+    if (username.isEmpty && email.isEmpty && password.isEmpty) {
+      showError('Todos os campos estam vazios');
+      userErro = '*Obrigatório';
+      emailErro = '*Obrigatório';
+      passwdErro = '*Obrigatório';
+    } else if (username.isEmpty) {
+      showError('Campo usuario está vazio');
+      userErro = 'Obrigatorio';
+    } else if (email.isEmpty) {
+      showError('Campo Email está vazio');
+      emailErro = 'Obrigatorio';
+    } else if (password.isEmpty) {
+      showError('Campo senha está vazio');
+      passwdErro = 'Obrigatorio';
+    } else {
+      //* Retira o erro dos campos
+      if (userErro != null || emailErro != null || passwdErro != null) {
+        userErro = null;
+        emailErro = null;
+        passwdErro = null;
+      }
 
-    var response;
+      //* Cadastra o usuario no sistema
+      final user = ParseUser.createUser(username, password, email);
 
-    try {
       //? Espera a resposta do servidor se conseguiu cadastrar o usuario
-      response = await user.signUp();
+      var response = await user.signUp();
 
       if (response.success) {
         showSuccess();
@@ -379,12 +449,14 @@ class _RegisterState extends State<Register> {
       } else {
         showError(response.error!.message);
       }
-    } catch (e) {
-      if (username.isEmpty) {
-        showError('Campo usuario está vazio');
-      } else if (password.isEmpty) {
-        showError('Campo email está vazio');
-      }
     }
+  }
+
+  void stopAnimation() {
+    //? variaveis para animação do botão
+    setState(() {
+      isLoading = false;
+      sizeWidth = 0.43;
+    });
   }
 }

@@ -21,8 +21,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   TextEditingController userController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
-  //* cor primaria
-  Color primaryColor = Color.fromARGB(255, 255, 111, 0);
+  //* cor primaria e secundaria
+  Color primaryColor = const Color.fromARGB(255, 255, 111, 0);
+  Color secondColor = const Color.fromARGB(255, 37, 39, 73);
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +41,9 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 Padding(
                   padding: const EdgeInsets.all(17.0),
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 37, 39, 73),
-                      borderRadius: BorderRadius.only(
+                    decoration: BoxDecoration(
+                      color: secondColor,
+                      borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(20),
                         topRight: Radius.circular(60),
                         bottomLeft: Radius.circular(60),
@@ -214,20 +215,41 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Successo!"),
+          backgroundColor: secondColor,
+          title: Text(
+            "Successo",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Enchanted',
+              fontSize: 40,
+              color: primaryColor,
+            ),
+          ),
           content: const Text(
-              "As instruções para realizar a troca da senha foram enviadas por email."),
+            "As instruções para realizar a troca da senha foram enviadas por email.",
+            textAlign: TextAlign.justify,
+            style: TextStyle(
+              color: Colors.blue,
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
           actions: <Widget>[
             ElevatedButton(
-              child: const Text("OK"),
+              style: ElevatedButton.styleFrom(
+                primary: primaryColor,
+              ),
+              child: const Text(
+                "OK",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
 
-                //? variaveis para animação do botão
-                setState(() {
-                  isLoading = false;
-                  sizeWidth = 0.43;
-                });
+                stopAnimation();
               },
             ),
           ],
@@ -242,20 +264,33 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text("Error!"),
-          //* i18n traduz o erro
+          backgroundColor: secondColor,
+          title: Text(
+            "Error",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontFamily: 'Enchanted',
+              fontSize: 40,
+              color: primaryColor,
+            ),
+          ),
           content: Text(errorMessage),
           actions: <Widget>[
             ElevatedButton(
-              child: const Text("OK"),
+              style: ElevatedButton.styleFrom(
+                primary: primaryColor,
+              ),
+              child: const Text(
+                "OK",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25,
+                ),
+              ),
               onPressed: () {
                 Navigator.of(context).pop();
 
-                //? variaveis para animação do botão
-                setState(() {
-                  isLoading = false;
-                  sizeWidth = 0.43;
-                });
+                stopAnimation();
               },
             ),
           ],
@@ -274,5 +309,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     } else {
       showError(parseResponse.error!.message);
     }
+  }
+
+  void stopAnimation() {
+    //? variaveis para animação do botão
+    setState(() {
+      isLoading = false;
+      sizeWidth = 0.43;
+    });
   }
 }
