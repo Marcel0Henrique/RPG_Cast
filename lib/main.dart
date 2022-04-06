@@ -8,10 +8,7 @@ import 'package:rpg_cast/views/register.dart';
 import 'package:parse_server_sdk_flutter/parse_server_sdk.dart';
 
 void main() async {
-  //*Spash Screen
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-
+  
   //* Back4App
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -24,8 +21,6 @@ void main() async {
 
   runApp(const MyApp());
 
-  // whenever your initialization is completed, remove the splash screen:
-  FlutterNativeSplash.remove();
 }
 
 class MyApp extends StatelessWidget {
