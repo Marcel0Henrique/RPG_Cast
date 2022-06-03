@@ -12,9 +12,9 @@ void main() async {
   //* Back4App
   WidgetsFlutterBinding.ensureInitialized();
 
-  final keyApplicationId = 'kY8RJOQcAocAgo1ks3x1LVhxVMtPpf0ylQ8LffG0';
-  final keyClientKey = 'W6ml6V9daB19a0r642AD76LHoENdTKoaFvy3G7wA';
-  final keyParseServerUrl = 'https://parseapi.back4app.com';
+  final keyApplicationId;
+  final keyClientKey;
+  final keyParseServerUrl;
 
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
