@@ -199,7 +199,7 @@ class _LoginState extends State<Login> {
                                   ),
                                   onPressed: isLoggedIn
                                       ? () => doUserLogin()
-                                      : () => doUserLogout,
+                                      : () => doUserLogout(),
                                   child: Text(
                                     isLoggedIn ? "Sair" : "Entrar",
                                     style: TextStyle(

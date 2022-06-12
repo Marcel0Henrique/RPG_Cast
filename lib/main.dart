@@ -14,7 +14,7 @@ void main() async {
 
   final keyApplicationId = applicationId;
   final keyClientKey = clientKey;
-  final keyParseServerUrl = "'https://parseapi.back4app.com'";
+  final keyParseServerUrl = "https://parseapi.back4app.com";
 
   await Parse().initialize(keyApplicationId, keyParseServerUrl,
       clientKey: keyClientKey, autoSendSessionId: true);
